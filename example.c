@@ -3,27 +3,44 @@
 
 #include "hash_map/hash_map.h"
 
+typedef struct {} Type;
+
 typedef struct {
   void *typeref;
-} Type;
+} TypeRef;
 
 typedef struct {
   HashMap *implementations;
-} Trait;
+} TraitType;
+
+void *Trait_impl_for(TraitType const trait, Type *type);
+
+struct {
+  void *(*impl_for)(TraitType const, Type *);
+} Trait = {
+  .impl_for = &Trait_impl_for
+};
+
+void *Trait_impl_for(TraitType const trait, Type * type) {
+  return HashMap_lookup(trait.implementations, type);
+}
 
 void Inspect_inspect(void *obj);
 
 struct {
-  Trait trait;
+  TraitType trait;
   void (*inspect)(void *);
-} Inspect  = {
+} Inspect = {
   .trait ={},
   .inspect = &Inspect_inspect
 };
 
 
-void Inspect_inspect(void *obj) {
-  void (*res)(void *) = HashMap_lookup(Inspect.trait.implementations, ((Type*) obj)->typeref);
+void Inspect_inspect(void *_obj) {
+  TypeRef* obj = (TypeRef *) _obj;
+  /* void (*res)(void *) = HashMap_lookup(Inspect.trait.implementations, ((TypeRef*) obj)->typeref); */
+  void *_res = Trait.impl_for((Inspect.trait), obj->typeref);
+  void (*res)(void *) = _res;
   res(obj);
 }
 
@@ -31,9 +48,9 @@ typedef struct {
   void (*inspect)(void *);
 } InspectTraitImplementation;
 
-struct {} Char = {};
+Type Char = {};
 typedef struct {
-  Type type;
+  TypeRef typeref;
   char character;
 } TChar;
 
@@ -60,7 +77,7 @@ int main(void) {
   initialize_trait_implementations();
 
   TChar * foo = calloc(1, sizeof(TChar));
-  foo->type.typeref = &Char;
+  foo->typeref.typeref = &Char;
   foo->character = 'a';
   /* TCharInspectImplementation.inspect(foo); */
   /* void (*res)(void *) = HashMap_lookup(Inspect.trait.implementations, foo->type.typeref); */
