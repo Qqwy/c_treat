@@ -1,0 +1,13 @@
+#ifndef HASH_MAP_IH
+#define HASH_MAP_IH
+
+#include "hash_map.h"
+
+#include <stdlib.h>
+
+
+size_t _HashMap_index (HashMap const *hash_map, void *const key);
+void _HashMap_resize(HashMap **hash_map_ref);
+
+
+#endif //HASH_MAP_IH
