@@ -13,15 +13,16 @@ typedef struct {
   HashMap *implementations;
 } TraitType;
 
-void *Trait_impl_for(TraitType const trait, Type *type);
+void *Trait_impl_for(void const *trait, Type *type);
 
 struct {
-  void *(*impl_for)(TraitType const, Type *);
+  void *(*impl_for)(void const *trait, Type *type);
 } Trait = {
   .impl_for = &Trait_impl_for
 };
 
-void *Trait_impl_for(TraitType const trait, Type * type) {
+void *Trait_impl_for(void const *_trait, Type * type) {
+  TraitType trait = *(TraitType*)(_trait);
   return HashMap_lookup(trait.implementations, type);
 }
 
@@ -35,38 +36,56 @@ struct {
   .inspect = &Inspect_inspect
 };
 
-
-void Inspect_inspect(void *_obj) {
-  TypeRef* obj = (TypeRef *) _obj;
-  /* void (*res)(void *) = HashMap_lookup(Inspect.trait.implementations, ((TypeRef*) obj)->typeref); */
-  void *_res = Trait.impl_for((Inspect.trait), obj->typeref);
-  void (*res)(void *) = _res;
-  res(obj);
-}
-
 typedef struct {
   void (*inspect)(void *);
 } InspectTraitImplementation;
 
-Type Char = {};
+
+void Inspect_inspect(void *_obj) {
+  TypeRef * obj = (TypeRef *) _obj;
+  void *_res = Trait.impl_for(&Inspect, obj->typeref);
+  InspectTraitImplementation *res = _res;
+  /* void (*res)(void *) = _res; */
+  res->inspect(obj);
+}
+
 typedef struct {
   TypeRef typeref;
   char character;
 } TChar;
 
+TChar *Char_new(char character);
 
-void TChar_Inspect_inspect(void *obj_ptr) {
+/* Type Char = {}; */
+struct {
+  Type type;
+  TChar *(*new)(char character);
+} Char = {
+  .type = {},
+  .new = &Char_new
+};
+
+
+TChar *Char_new(char character) {
+  TChar *obj = calloc(1, sizeof(TChar));
+  obj->typeref.typeref = &Char;
+  obj->character = character;
+
+  return obj;
+}
+
+void Inspect_TChar_inspect(void *obj_ptr) {
   TChar *obj = (TChar *) obj_ptr;
   printf("TChar: {character: %c}\n", obj->character);
 }
 
-InspectTraitImplementation TCharInspectImplementation = {
-  .inspect = &TChar_Inspect_inspect
+InspectTraitImplementation InspectTCharImplementation = {
+  .inspect = &Inspect_TChar_inspect
 };
 
 void initialize_trait_implementations(){
   Inspect.trait.implementations = HashMap_new(2);
-  HashMap_insert(&Inspect.trait.implementations, &Char, TChar_Inspect_inspect);
+  HashMap_insert(&Inspect.trait.implementations, &Char, &InspectTCharImplementation);
 }
 
 void free_trait_implementations(){
@@ -76,10 +95,11 @@ void free_trait_implementations(){
 int main(void) {
   initialize_trait_implementations();
 
-  TChar * foo = calloc(1, sizeof(TChar));
-  foo->typeref.typeref = &Char;
-  foo->character = 'a';
-  /* TCharInspectImplementation.inspect(foo); */
+  TChar *foo = Char.new('a');
+  /* TChar * foo = calloc(1, sizeof(TChar)); */
+  /* foo->typeref.typeref = &Char; */
+  /* foo->character = 'a'; */
+  /* InspectTCharImplementation.inspect(foo); */
   /* void (*res)(void *) = HashMap_lookup(Inspect.trait.implementations, foo->type.typeref); */
   /* res(foo); */
   Inspect.inspect(foo);
