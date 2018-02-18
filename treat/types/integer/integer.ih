@@ -2,6 +2,7 @@
 #define TREAT_TYPES_INTEGER_IH_
 
 #include "integer.h"
+#include "../../treat.h"
 
 // Exposed through API:
 TInteger *Integer_new(int integer);

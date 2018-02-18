@@ -2,5 +2,5 @@
 
 void destroy(void *obj);
 void Integer_destroy(TInteger *integer) {
-  destroy(integer);
+  Treat.destroy(integer);
 }

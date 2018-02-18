@@ -2,6 +2,7 @@
 #define TREAT_TYPES_CHAR_IH
 
 #include "char.h"
+#include "../../treat.h"
 
 // Functions exposed through module:
 TChar *Char_new(char character);

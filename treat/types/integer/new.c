@@ -2,7 +2,7 @@
 
 void *new(const void * _type, ...);
 TInteger *Integer_new(int integer) {
-  TInteger *obj = new(&Integer, integer);
+  TInteger *obj = Treat.new(&Integer, integer);
   obj->integer = integer;
 
   return obj;

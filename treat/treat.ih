@@ -1,0 +1,13 @@
+#ifndef TREAT_IH_
+#define TREAT_IH_
+
+#include "treat.h"
+
+#include "type/type.h"
+#include "stdlib.h"
+#include "stdarg.h"
+
+void *Treat_new(const void *type, ...);
+void Treat_destroy(void *obj);
+
+#endif //TREAT_IH_
