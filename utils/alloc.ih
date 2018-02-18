@@ -1,0 +1,8 @@
+#ifndef _UTILS_ALLOC_IH_
+#define _UTILS_ALLOC_IH_
+
+#include "alloc.h"
+#include <stdlib.h>
+#include <stdio.h>
+
+#endif //_UTILS_ALLOC_IH

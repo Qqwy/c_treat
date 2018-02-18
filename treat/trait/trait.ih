@@ -1,0 +1,12 @@
+#ifndef TREAT_TRAIT_IH_
+#define TREAT_TRAIT_IH_
+
+#include "trait.h"
+
+#include <stdlib.h>
+#include "../../utils/print.h"
+
+void Trait_add_impl(void *trait, void *type, void *impl);
+void *Trait_impl_for(void const *trait, Type *type);
+
+#endif //TREAT_TRAIT_IH_

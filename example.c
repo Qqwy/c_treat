@@ -4,45 +4,8 @@
 
 #include "hash_map/hash_map.h"
 
-typedef struct {
-  size_t size;
-  void *(*ctor)(void *self, va_list *arguments);
-  void *(*dtor)(void *self);
-} Type;
-
-typedef struct {
-  void *type;
-} TypeRef;
-
-typedef struct {
-  HashMap *implementations;
-} TraitType;
-
-void Trait_add_impl(void *trait, void *type, void *impl);
-void *Trait_impl_for(void const *trait, Type *type);
-
-struct {
-  void (*add_impl)(void *trait, void *type, void *impl);
-  void *(*impl_for)(void const *trait, Type *type);
-} Trait = {
-  .add_impl = &Trait_add_impl,
-  .impl_for = &Trait_impl_for,
-};
-
-void Trait_add_impl(void *_trait, void *_type, void *impl){
-  Type *type = _type;
-  TraitType *trait = _trait;
-  HashMap_insert(&trait->implementations, type, impl);
-}
-
-void *Trait_impl_for(void const *_trait, Type *type) {
-  TraitType trait = *(TraitType*)(_trait);
-  void * trait_impl = HashMap_lookup(trait.implementations, type);
-  if(trait_impl == NULL) {
-    printf("Error in Trait implementation lookup. Trait might not be implemented for type.\n");
-  }
-  return trait_impl;
-}
+#include "treat/type/type.h"
+#include "treat/trait/trait.h"
 
 void Inspect_inspect(void *obj);
 
