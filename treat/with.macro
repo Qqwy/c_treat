@@ -1,0 +1,30 @@
+/* RAII-style datatype usage
+   The type will be automatically cleaned up once the end of `block` is reached.
+   This is really helpful for objects like file handles, that really need to be closed once done with them.
+
+   Do note! Do not use `return` from inside the block, but only `break` or `continue` to skip to the end of it.
+
+
+   Parameters:
+   `type`: Tye type of `var`
+   `var`: The name of the data structure to be used inside the block, that will be initialized and destroyed afterwards.
+   `init`: A statement that returns an initial value of type `type` for `var` to receive.
+   `block`: Any statement(s) to run while `var` exists.
+
+   Example:
+   ```
+      T_with(TInteger *, my_int, Integer.new(1234), {
+        Inspect.inspect(my_int);
+      });
+      // Look ma, no leaking! `my_int` is gone!
+  ```
+ */
+
+#define TP(x, y) x ## y
+
+#define T_with(type_and_var, init, block) do {  \
+  void *_tmp;                                   \
+    (type_and_var) = _tmp = (init);             \
+    {block};                                    \
+    Treat.destroy(_tmp);                        \
+  } while(0)
