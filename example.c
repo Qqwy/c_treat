@@ -22,5 +22,4 @@ int main(void) {
   Char.destroy(foo);
   Integer.destroy(bar);
 
-  /* free_trait_implementations(); */
 }
