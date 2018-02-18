@@ -5,6 +5,7 @@
 struct _TreatModule {
   void *(*new)(const void * type, ...);
   void (*destroy)(void *obj);
+  void (*init)();
 };
 struct _TreatModule Treat;
 

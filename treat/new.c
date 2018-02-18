@@ -2,7 +2,7 @@
 
 void *Treat_new(const void * _type, ...) {
   const Type *type = _type;
-  void *obj = calloc(1, type->size);
+  void *obj = safe_calloc(1, type->size);
   /* assert(obj); */
 
   *(const Type **) obj = type;
