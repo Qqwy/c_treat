@@ -29,7 +29,6 @@ struct {
   .impl_for = &Trait_impl_for,
 };
 
-
 void Trait_add_impl(void *_trait, void *_type, void *impl){
   Type *type = _type;
   TraitType *trait = _trait;
@@ -74,18 +73,22 @@ typedef struct {
 } TChar;
 
 TChar *Char_new(char character);
+void Char_destroy(TChar *character);
+
 void *Char_ctor(void *self, va_list *args);
 void *Char_dtor(void *self);
 
 struct {
   Type type;
   TChar *(*new)(char character);
+  void (*destroy)(TChar *character);
 } Char = {
   .type.size = sizeof(TChar),
   .type.ctor = &Char_ctor,
   .type.dtor = &Char_dtor,
 
-  .new = &Char_new
+  .new = &Char_new,
+  .destroy = &Char_destroy,
 };
 
 void *Char_ctor(void *_self, va_list *args) {
@@ -117,11 +120,22 @@ void *new(const void * _type, ...) {
   return obj;
 }
 
+void destroy(void *obj) {
+  const Type **type_pointer = obj;
+  if(obj && *type_pointer && (*type_pointer)->dtor)
+    obj = (* type_pointer)->dtor(obj);
+  free(obj);
+}
+
 TChar *Char_new(char character) {
   TChar *obj = new(&Char, character);
   obj->character = character;
 
   return obj;
+}
+
+void Char_destroy(TChar *character) {
+  destroy(character);
 }
 
 void Inspect_TChar_inspect(void *obj_ptr) {
@@ -143,15 +157,19 @@ TInteger *Integer_new(int integer);
 void *Integer_ctor(void *self, va_list *args);
 void *Integer_dtor(void *self);
 
+void Integer_destroy(TInteger *integer);
+
 struct {
   Type type;
   TInteger *(*new)(int integer);
+  void(*destroy)(TInteger *integer);
 } Integer = {
   .type.size = sizeof(TInteger),
   .type.ctor = &Integer_ctor,
   .type.dtor = &Integer_dtor,
 
-  .new = &Integer_new
+  .new = &Integer_new,
+  .destroy = &Integer_destroy
 };
 
 void *Integer_ctor(void *_self, va_list *args) {
@@ -174,6 +192,10 @@ TInteger *Integer_new(int integer) {
   return obj;
 }
 
+void Integer_destroy(TInteger *integer) {
+  destroy(integer);
+}
+
 void Inspect_TInteger_inspect(void *obj_ptr) {
   TInteger *obj = (TInteger *) obj_ptr;
   printf("TInteger: {integer: %d}\n", obj->integer);
@@ -183,8 +205,6 @@ void Inspect_TInteger_inspect(void *obj_ptr) {
 InspectTraitImplementation InspectTIntegerImplementation = {
   .inspect = &Inspect_TInteger_inspect
 };
-
-
 
 void initialize_trait_implementations(){
   Inspect.trait.implementations = HashMap_new(2);
@@ -205,7 +225,8 @@ int main(void) {
   TInteger *bar = Integer.new(1234);
   Inspect.inspect(foo);
   Inspect.inspect(bar);
-  free(foo);
-  free(bar);
+  Char.destroy(foo);
+  Integer.destroy(bar);
+
   free_trait_implementations();
 }
