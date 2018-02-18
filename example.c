@@ -5,9 +5,6 @@
 #include "hash_map/hash_map.h"
 
 #include "treat/treat.h"
-#include "treat/type/type.h"
-#include "treat/trait/trait.h"
-#include "treat/traits/inspect/inspect.h"
 
 #include "treat/types/char/char.h"
 #include "treat/types/integer/integer.h"
