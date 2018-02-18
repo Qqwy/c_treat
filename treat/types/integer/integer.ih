@@ -1,0 +1,14 @@
+#ifndef TREAT_TYPES_INTEGER_IH_
+#define TREAT_TYPES_INTEGER_IH_
+
+#include "integer.h"
+
+// Exposed through API:
+TInteger *Integer_new(int integer);
+void Integer_destroy(TInteger *integer);
+
+// Internal functions:
+void *Integer_ctor(void *self, va_list *args);
+void *Integer_dtor(void *self);
+
+#endif //TREAT_TYPES_INTEGER_IH_

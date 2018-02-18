@@ -1,0 +1,14 @@
+#ifndef TREAT_TYPES_CHAR_IH
+#define TREAT_TYPES_CHAR_IH
+
+#include "char.h"
+
+// Functions exposed through module:
+TChar *Char_new(char character);
+void Char_destroy(TChar *character);
+
+// Internal functions:
+void *Char_ctor(void *self, va_list *args);
+void *Char_dtor(void *self);
+
+#endif //TREAT_TYPES_CHAR_IH

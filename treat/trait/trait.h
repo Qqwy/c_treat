@@ -3,11 +3,11 @@
 
 #include "../type/type.h"
 
-struct _TraitStruct {
+// Module Interface:
+struct _TreatTraitModule {
   void (*add_impl)(void *trait, void *type, void *impl);
   void *(*impl_for)(void const *trait, Type *type);
 };
-
-extern struct _TraitStruct const Trait;
+extern struct _TreatTraitModule const Trait;
 
 #endif //TREAT_TRAIT_H_
