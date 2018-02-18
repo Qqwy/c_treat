@@ -11,13 +11,14 @@
 #include "treat/with.macro"
 
 
-
 int main(void) {
   Treat.init();
 
-  /* TInteger *foo, *bar = Integer.new(123); */
+  T_with(TInteger * my_int, Integer.new(1235)) {
+    Inspect.inspect(my_int);
+  };
 
-  T_with(TChar * baz, Char.new('b'), {
+  T_with(TChar * baz, Char.new('b')) {
     Inspect.inspect(baz);
     Inspect.inspect(baz);
 
@@ -28,10 +29,6 @@ int main(void) {
     Char.destroy(foo);
     Integer.destroy(bar);
 
+  };
 
-
-    T_with(TInteger * my_int, Integer.new(1235), {
-        Inspect.inspect(my_int);
-    });
-  });
 }

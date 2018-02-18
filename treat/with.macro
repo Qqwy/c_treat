@@ -20,11 +20,35 @@
   ```
  */
 
-#define TP(x, y) x ## y
+#define TPimpl(x, y) x ## y
+#define TP(x, y) TPimpl(x, y)
 
-#define T_with(type_and_var, init, block) do {  \
-  void *_tmp;                                   \
-    (type_and_var) = _tmp = (init);             \
-    {block};                                    \
-    Treat.destroy(_tmp);                        \
-  } while(0)
+/* #define T_with(type_and_var, init, block) do {  \ */
+/*   void *_tmp;                                   \ */
+/*     (type_and_var) = _tmp = (init);             \ */
+/*     {block};                                    \ */
+/*     Treat.destroy(_tmp);                        \ */
+/*   } while(0) */
+
+#define T_with(type_and_var, init)                    \
+  while(1)                                            \
+    if(0)                                             \
+    TP(__using_finished, __LINE__):                   \
+      break;                                          \
+    else                                              \
+      for(void *_tmp = 0;;)                           \
+        for(type_and_var = _tmp = (init);;)           \
+          if (0) {                                    \
+          TP(__using_cleanup, __LINE__):              \
+            Treat.destroy(_tmp);                      \
+            goto TP(__using_finished, __LINE__);      \
+          } else                                      \
+            if (1) {                                  \
+              goto TP(__using_body, __LINE__);        \
+            } else                                    \
+              while (1)                               \
+                if (1){                               \
+                  goto TP(__using_cleanup, __LINE__); \
+                } else                                \
+                TP(__using_body, __LINE__):           \
+
