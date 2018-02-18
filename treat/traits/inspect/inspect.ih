@@ -1,0 +1,8 @@
+#ifndef TREAT_TRAITS_INSPECT_IH_
+#define TREAT_TRAITS_INSPECT_IH_
+
+#include "inspect.h"
+
+void Inspect_inspect(void *obj);
+
+#endif //TREAT_TRAITS_INSPECT_IH_

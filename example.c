@@ -6,29 +6,30 @@
 
 #include "treat/type/type.h"
 #include "treat/trait/trait.h"
+#include "treat/traits/inspect/inspect.h"
 
-void Inspect_inspect(void *obj);
+/* void Inspect_inspect(void *obj); */
 
-struct {
-  TraitType trait;
-  void (*inspect)(void *);
-} Inspect = {
-  .trait ={},
-  .inspect = &Inspect_inspect
-};
+/* /\* struct { */
+/*   TraitType trait; */
+/*   void (*inspect)(void *); */
+/* }*\/struct _TreatTraitsInspectStruct Inspect = { */
+/*   .trait ={}, */
+/*   .inspect = &Inspect_inspect */
+/* }; */
 
-typedef struct {
-  void (*inspect)(void *);
-} InspectTraitImplementation;
+/* typedef struct { */
+/*   void (*inspect)(void *); */
+/* } InspectTraitImplementation; */
 
 
-void Inspect_inspect(void *_obj) {
-  TypeRef * obj = (TypeRef *) _obj;
-  void *_res = Trait.impl_for(&Inspect, obj->type);
-  InspectTraitImplementation *res = _res;
-  /* void (*res)(void *) = _res; */
-  res->inspect(obj);
-}
+/* void Inspect_inspect(void *_obj) { */
+/*   TypeRef * obj = (TypeRef *) _obj; */
+/*   void *_res = Trait.impl_for(&Inspect, obj->type); */
+/*   InspectTraitImplementation *res = _res; */
+/*   /\* void (*res)(void *) = _res; *\/ */
+/*   res->inspect(obj); */
+/* } */
 
 typedef struct {
   TypeRef typeref;
