@@ -9,9 +9,8 @@
 #include "treat/types/integer/integer.h"
 #include "treat/with.macro"
 
-
 int main(void) {
-  Treat.init(0);
+  Treat.init();
 
   T_with(TString * my_str, String.new("foo bar baz")) {
     Inspect.inspect(my_str);

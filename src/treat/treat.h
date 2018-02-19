@@ -13,7 +13,7 @@ struct _TraitImplementationTriple {
 struct _TreatModule {
   void *(*new)(const void * type, ...);
   void (*destroy)(void *obj);
-  void (*init)(size_t n_custom_impls, ...);
+  void (*init)();
 };
 struct _TreatModule Treat;
 
