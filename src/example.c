@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-#include "hash_map/hash_map.h"
-
 #include "treat/treat.h"
 
 #include "treat/types/char/char.h"

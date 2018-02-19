@@ -4,7 +4,7 @@
 #include "trait.h"
 
 #include <stdlib.h>
-#include "../../utils/print.h"
+#include "../utils/print.h"
 
 void Trait_add_impl(void *trait, void *type, void *impl);
 void *Trait_impl_for(void const *trait, Type *type);

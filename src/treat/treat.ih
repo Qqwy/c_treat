@@ -6,7 +6,7 @@
 #include "type/type.h"
 #include "stdlib.h"
 #include "stdarg.h"
-#include "../utils/alloc.h"
+#include "utils/alloc.h"
 
 void Treat_init();
 void *Treat_new(const void *type, ...);

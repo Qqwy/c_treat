@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gcc -Wall *.c **/*.c **/**/*.c **/**/**/*.c **/**/**/**/*.c -g -Wall -Werror
+gcc -Wall src/*.c src/**/*.c src/**/**/*.c src/**/**/**/*.c src/**/**/**/**/*.c -g -Wall -Werror

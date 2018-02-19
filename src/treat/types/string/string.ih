@@ -6,8 +6,8 @@
 
 #include <string.h>
 #include <stdlib.h>
-#include "../../../utils/alloc.h"
-#include "../../../utils/math.h"
+#include "../../utils/alloc.h"
+#include "../../utils/math.h"
 
 // Functions exposed through module:
 TString *String_new(char const *str);

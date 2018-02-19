@@ -4,7 +4,7 @@
 #include <sys/types.h>
 #include <stdarg.h>
 
-#include "../../hash_map/hash_map.h"
+#include "../hash_map/hash_map.h"
 
 /*
 Any Treat Type struct needs to have a 'Type type' field

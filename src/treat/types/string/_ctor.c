@@ -1,7 +1,5 @@
 #include "string.ih"
 
-#include "../../../utils/math.h"
-
 void *String_ctor(void *_self, va_list *args) {
   TString *self = _self;
   char const *string = va_arg(*args, char const *);
