@@ -24,14 +24,14 @@
 #define TP(x, y) TPimpl(x, y)
 
 
-#define T_with(var_decl, init)                    \
+#define T_with(var_decl, init)                        \
   while(1)                                            \
     if(0)                                             \
     TP(__using_finished, __LINE__):                   \
       break;                                          \
     else                                              \
       for(void *_tmp = 0;;)                           \
-        for(var_decl = _tmp = (init);;)           \
+        for(var_decl = _tmp = (init);;)               \
           if (0) {                                    \
           TP(__using_cleanup, __LINE__):              \
             Treat.destroy(_tmp);                      \
