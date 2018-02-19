@@ -20,7 +20,7 @@ These traits are resolved at runtime and do not 'disappear' at compile-time (oth
 You should include the `treat/treat.h` header in your file(s).
 At the start of the program (before using any of Treat's functions), run `Treat.init()** to set up all known traits and trait-implementations, so the trait-dispatching logic can find them.
 
-**TODO** In the future, you'll be able to add a list of your own traits as arguments to this function and add them at that time as well.
+Custom Trait-implementations can be added using `Trait.add_impl(Trait *trait, Type *type, void *trait_implementation_struct);`
 
 Now, you can use any of Treat's functions.
 All datatypes have a module of their name, and the functions of this module are nested under this name, as you might know of other languages.
