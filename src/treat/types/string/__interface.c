@@ -2,6 +2,7 @@
 
 struct _TreatTypesStringModule String = {
     .type.size = sizeof(TString),
+    .type.name = "String",
     .type.ctor = &String_ctor,
     .type.dtor = &String_dtor,
 

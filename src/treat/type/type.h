@@ -12,6 +12,7 @@ as first field in its struct, so it can be pointer-cast to this Type struct.
  */
 typedef struct {
   size_t size;
+  char const *name;
   void *(*ctor)(void *self, va_list *arguments);
   void *(*dtor)(void *self);
 } Type;
@@ -22,6 +23,7 @@ typedef struct {
 
 typedef struct {
   HashMap *implementations;
+  char const *name;
 } TraitType;
 
 #endif //TREAT_TYPE_H_

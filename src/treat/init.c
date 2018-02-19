@@ -13,7 +13,6 @@ void Treat_init(size_t n_impls, ...) {
   Inspect.trait.implementations = HashMap_new(2);
   Trait.add_impl(&Inspect, &Char, &Char_TraitImpls_Inspect);
   Trait.add_impl(&Inspect, &String, &String_TraitImpls_Inspect);
-  Trait.add_impl(&Inspect, &Integer, &Integer_TraitImpls_Inspect);
 
   atexit(&Treat_deinit);
 
