@@ -2,42 +2,36 @@
    The type will be automatically cleaned up once the end of `block` is reached.
    This is really helpful for objects like file handles, that really need to be closed once done with them.
 
-   Do note! Do not use `return` from inside the block, but only `break` or `continue` to skip to the end of it.
-
+   Two important notices:
+   1. This only works with data types that follow Treat's data type specification.
+      (Specifically: Treat needs to be able to find its destructor).
+   2. Do not use `return` from inside the block, but only `break` or `continue` to skip to the end of it, because premature returns will result in the destructor not being called.
 
    Parameters:
-   `type`: Tye type of `var`
-   `var`: The name of the data structure to be used inside the block, that will be initialized and destroyed afterwards.
+   `var_decl`: A declaration of the type and name to use for the managed variable.
    `init`: A statement that returns an initial value of type `type` for `var` to receive.
    `block`: Any statement(s) to run while `var` exists.
 
    Example:
    ```
-      T_with(TInteger *, my_int, Integer.new(1234), {
+      T_with(TInteger * my_int, Integer.new(1234)) {
         Inspect.inspect(my_int);
-      });
+      }
       // Look ma, no leaking! `my_int` is gone!
   ```
- */
-
+*/
 #define TPimpl(x, y) x ## y
 #define TP(x, y) TPimpl(x, y)
 
-/* #define T_with(type_and_var, init, block) do {  \ */
-/*   void *_tmp;                                   \ */
-/*     (type_and_var) = _tmp = (init);             \ */
-/*     {block};                                    \ */
-/*     Treat.destroy(_tmp);                        \ */
-/*   } while(0) */
 
-#define T_with(type_and_var, init)                    \
+#define T_with(var_decl, init)                    \
   while(1)                                            \
     if(0)                                             \
     TP(__using_finished, __LINE__):                   \
       break;                                          \
     else                                              \
       for(void *_tmp = 0;;)                           \
-        for(type_and_var = _tmp = (init);;)           \
+        for(var_decl = _tmp = (init);;)           \
           if (0) {                                    \
           TP(__using_cleanup, __LINE__):              \
             Treat.destroy(_tmp);                      \

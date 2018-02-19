@@ -1,0 +1,19 @@
+#ifndef TREAT_TYPES_STRING_IH
+#define TREAT_TYPES_STRING_IH
+
+#include "string.h"
+#include "../../treat.h"
+
+#include <string.h>
+#include <stdlib.h>
+#include "../../../utils/alloc.h"
+
+// Functions exposed through module:
+TString *String_new(char *str);
+void String_destroy(TString *str);
+
+// Internal functions:
+void *String_ctor(void *self, va_list *args);
+void *String_dtor(void *self);
+
+#endif //TREAT_TYPES_STRING_IH
