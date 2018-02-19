@@ -123,7 +123,7 @@ Caveats:
 GCC is able to optimize the macro quite nicely :-).
 
 Example:
-```
+```C
   T_with(TInteger * my_int, Integer.new(1234)) {
     Inspect.inspect(my_int);
   }

@@ -11,7 +11,7 @@
 
 
 int main(void) {
-  Treat.init();
+  Treat.init(0);
 
   T_with(TString * my_str, String.new("foo bar baz")) {
     Inspect.inspect(my_str);
