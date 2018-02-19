@@ -15,11 +15,14 @@
 int main(void) {
   Treat.init();
 
-  /* T_with(TString * my_str, String.new("foo bar baz")) { */
-  TString *my_str = String.new("foo bar baz");
+  T_with(TString * my_str, String.new("foo bar baz")) {
     Inspect.inspect(my_str);
-    String.destroy(my_str);
-  /* }; */
+    String.concat_charptr(my_str, " qux");
+    T_with(TString *other_str, String.new(" la la la")) {
+      String.concat(my_str, other_str);
+    }
+    Inspect.inspect(my_str);
+  };
 
   T_with(TChar * baz, Char.new('b')) {
     Inspect.inspect(baz);

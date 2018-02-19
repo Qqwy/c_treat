@@ -7,4 +7,6 @@ struct _TreatTypesStringModule String = {
 
     .new = &String_new,
     .destroy = &String_destroy,
+    .concat_charptr = &String_concat_charptr,
+    .concat = &String_concat,
 };
